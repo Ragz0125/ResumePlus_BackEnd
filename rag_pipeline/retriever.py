@@ -12,6 +12,8 @@ def remove_duplicate_docs(vector_docs, bm25_docs):
     seen= set()
     final_docs = []
     
+    print(docs)
+    
     for doc in docs:
         if doc.page_content not in seen:
             seen.add(doc.page_content)

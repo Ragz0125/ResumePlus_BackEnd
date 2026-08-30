@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI):
     docs = chunk_material()
     if not Path(VECTORDB_PATH).exists():
         print("Hello")
-        create_vector_db()
+        create_vector_db(docs)
         bm25_retriever = get_bm25_retriever(docs)
         vector_retriever = get_vector_retriever()
     else:

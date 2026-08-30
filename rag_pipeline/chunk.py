@@ -11,8 +11,10 @@ embedding_model = OpenAIEmbeddings(model="text-embedding-3-small", api_key=OPENA
 
 def chunk_material():
     document=PyPDFLoader("Raghav_Rajaraman_Resume.pdf")
-    document_content = document.load()[0].page_content
-    HEADERS = ["SUMMARY", "EDUCATION", "EXPERIENCE", "RESEARCH", "PROJECTS", "TECHNICAL SKILLS"]
+    documents = document.load()
+    
+    document_content = "\n".join(doc.page_content for doc in documents)
+    HEADERS = ["SUMMARY", "EDUCATION", "EXPERIENCE", "RESEARCH", "PROJECTS", "TECHNICAL SKILLS", "LEADERSHIP SKILLS"]
     
     regex_exp = r"^(" + "|".join(map(re.escape, HEADERS)) + r")\s*\*?$"
     clean_text = document_content.split("\n")
@@ -32,17 +34,19 @@ def chunk_material():
             chunks[header] = ""
         else: 
             content = content + line.strip("\n")
-    #For the last section (Technical Skills)
+    #For the last section (Leadership skills)
     if(content):
         chunks[header] = content
     
     docs = []
     for chunk in chunks:
         docs.append(Document(metadata={"section": chunk}, page_content=chunks[chunk]))
+        
+    print(docs)
     
     return docs
 
-def create_vector_db():
+def create_vector_db(docs):
     vector_db = Chroma.from_documents(documents=docs, embedding=embedding_model, persist_directory="./resume_db", collection_metadata={"hnsw:space": "cosine"} )
     
 def get_vector_retriever():
