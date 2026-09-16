@@ -14,7 +14,7 @@ def chunk_material():
     documents = document.load()
     
     document_content = "\n".join(doc.page_content for doc in documents)
-    HEADERS = ["SUMMARY", "EDUCATION", "EXPERIENCE", "RESEARCH", "PROJECTS", "TECHNICAL SKILLS", "LEADERSHIP SKILLS"]
+    HEADERS = ["SUMMARY", "EDUCATION", "EXPERIENCE", "PROJECTS", "TECHNICAL SKILLS", "LEADERSHIP SKILLS"]
     
     regex_exp = r"^(" + "|".join(map(re.escape, HEADERS)) + r")\s*\*?$"
     clean_text = document_content.split("\n")
