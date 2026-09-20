@@ -52,5 +52,6 @@ def get_user_details(current_user: User=Depends(get_current_user)):
     
     return {
         "user_id": current_user.id,
-        "user_name": current_user.username
+        "user_name": current_user.username,
+        "user_email": current_user.email
     }
