@@ -24,6 +24,7 @@ mailjet = Client(auth=(MAIL_JET_API_KEY, MAIL_JET_SECRET_KEY), version='v3.1')
 EMAIL_SYSTEM_PROMPT ="""You are an expert professional email writer.
 
 Generate a professional email based strictly on the provided context.
+Always write the email from the recruiter/user's perspective, not the candidate's. The email should be clear, concise, and professional.
 
 Rules:
 - Use only information available in the context.
